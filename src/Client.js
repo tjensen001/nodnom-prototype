@@ -12,9 +12,23 @@ class Client extends Component {
 
     render(){    
 
-        geolocation()
-            
-
+        function showPosition(position) {
+            var coords = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }
+        }
+        
+        function getLocation() {
+            if (navigator.geolocation) {
+                console.log(navigator.geolocation.getCurrentPosition(showPosition));
+            } else {
+                console.log("Geolocation is not supported by this browser.");
+            }
+        }
+        
+        geoLocation()
+        
          
         return (
             <div>     
