@@ -4,7 +4,7 @@ import LandingPage from './landingpage';
 import Login from './login'
 import Signup from './signup'
 import 'bootstrap/dist/css/bootstrap.css';
-import './app.css';
+import './App.css';
 
 class App extends Component {
   render() {
