@@ -1,0 +1,22 @@
+@startuml
+
+title "Login Sequence Diagram"
+
+actor User
+boundary "WEB GUI" as GUI
+control "REACT SERVER" as RS
+control "NODE.js SERVER" as NJS 
+database POSTGRE
+
+User -> GUI : login requested
+GUI -> RS : login_request JSX
+RS -> NJS : login_request
+NJS -> POSTGRE : user_validation_request (Sequelize)
+POSTGRE --> NJS :user_validation_request
+NJS --> RS : login_response
+GUI --> User : login_deny
+RS --> GUI : update_render_DOM
+GUI --> User : login_response
+
+
+@enduml
