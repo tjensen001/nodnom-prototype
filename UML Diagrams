@@ -1,1 +1,42 @@
 
+@startuml
+left to right direction
+title USE CASE DIAGRAMS
+
+actor user
+rectangle user_flow {
+    user --> (search_vendors): request auth
+    user <-- (search_vendors): deny auth
+    (search_vendors) -> (search_vendors): authorize login
+    
+    (search_vendors) --> (vendor_list)
+    
+    (search_vendors) --> (map)
+    
+    (map) --> (vendor_selected)
+    (map) <-> (vendor_list) 
+    (vendor_list) --> (vendor_selected)
+    (vendor_selected) --> (vendor_about)
+    (vendor_selected) --> (vendor_menu)
+    (vendor_selected) --> (vender_location)
+    
+}
+
+
+actor vendor
+rectangle vendor_flow {
+    vendor --> (vendor_account): request auth
+    vendor <-- (vendor_account): deny auth
+    (vendor_account) -> (vendor_account): authorize login
+    (vendor_account) --> (edit_vender_about)
+    (vendor_account) --> (edit_vender_menu)
+    (vendor_account) --> (edit_vender_location)
+    
+}
+
+
+@enduml
+
+
+
+
