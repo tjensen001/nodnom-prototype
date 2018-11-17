@@ -9,7 +9,7 @@ box "User" #lavender
 actor "User"
 end box
 box "FrontEnd" #lightgrey
-    participant "WEB APP" as GUI
+    participant "BROWSER" as GUI
     control "REACT" as RS
 end box
 box "BackEnd Node.js Server" #aquamarine
@@ -29,20 +29,32 @@ RS --> GUI : update_DOM
 GUI --> User : login_grant
 
 ==Vendor Search==
-User -> GUI: login_granted
+User -> GUI: login_granted begin session
 activate "GUI"
-GUI -> RS: request_vendor
-RS -> NJS: request_vendor
-NJS -> POSTGRE: query_vendor
-POSTGRE --> NJS: repsonse_vendor
-NJS-->RS : response_vendor
+activate "RS"
+GUI -> RS: request_vendors
+RS -> NJS: request_vendors
+NJS -> POSTGRE: query_vendors
+POSTGRE --> NJS: repsonse_vendors
+NJS-->RS : response_vendors
 NJS -> GoogleAPI: api_call
 GoogleAPI -->NJS: api_response
-==SHOW MAP/LIST VENDORS==
 NJS --> RS: map/list_response
 RS --> GUI : update_DOM
+==Select Vendor==
+User -> GUI : selects_vendor
+GUI -> NJS: request_vendor_info
+NJS -> POSTGRE: query_vendor_info
+POSTGRE --> NJS : repsonse_vendor_info
+NJS --> RS: response_vendor_info
+RS --> GUI: show_vendor_info
+==Log Out==
+User -> GUI: logout
+GUI -> NJS: logout
+NJS -> POSTGRE: destroy session
 
 
+destroy "RS"
 destroy "GUI"
 
 
