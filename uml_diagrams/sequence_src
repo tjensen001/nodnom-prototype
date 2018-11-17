@@ -1,22 +1,50 @@
 @startuml
 
-title "Login Sequence Diagram"
+title "NOBNOM Sequence Diagram"
 
-actor User
-boundary "WEB GUI" as GUI
-control "REACT SERVER" as RS
-control "NODE.js SERVER" as NJS 
-database POSTGRE
+==Authentication==
+box "User" #lavender
 
-User -> GUI : login requested
-GUI -> RS : login_request JSX
+
+actor "User"
+end box
+box "FrontEnd" #lightgrey
+    participant "WEB APP" as GUI
+    control "REACT" as RS
+end box
+box "BackEnd Node.js Server" #aquamarine
+    control "EXPRESS" as NJS
+    database POSTGRE
+end box
+User -> NJS : requests_login_page
+NJS --> User : response_login_page
+User -> GUI: reqest_login_form
+GUI -> RS : login_request
 RS -> NJS : login_request
-NJS -> POSTGRE : user_validation_request (Sequelize)
-POSTGRE --> NJS :user_validation_request
+NJS -> POSTGRE : user_validation_request 
+POSTGRE --> NJS :user_validation_response
 NJS --> RS : login_response
 GUI --> User : login_deny
-RS --> GUI : update_render_DOM
-GUI --> User : login_response
+RS --> GUI : update_DOM
+GUI --> User : login_grant
+
+==Vendor Search==
+User -> GUI: login_granted
+activate "GUI"
+GUI -> RS: request_vendor
+RS -> NJS: request_vendor
+NJS -> POSTGRE: query_vendor
+POSTGRE --> NJS: repsonse_vendor
+NJS-->RS : response_vendor
+NJS -> GoogleAPI: api_call
+GoogleAPI -->NJS: api_response
+==SHOW MAP/LIST VENDORS==
+NJS --> RS: map/list_response
+RS --> GUI : update_DOM
+
+
+destroy "GUI"
+
 
 
 @enduml
