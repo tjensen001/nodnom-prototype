@@ -1,0 +1,127 @@
+@startuml
+
+title NOBNOM - Class Diagram
+package React <<Node>> #lightgrey {
+  class Component {
+    + defaultProps
+    + displayName
+    + constructor()
+    + static getDerivedStateFromProps()
+    + render()
+    + componentDidMount()
+    + static getDerivedStateFromProps()
+    + shouldComponentUpdate()
+    + render()
+    + getSnapshotBeforeUpdate()
+    + componentDidUpdate()
+    + componentWillUnmount()
+    + static getDerivedStateFromError()
+    + componentDidCatch()
+    + setState()
+    + forceUpdate()
+  }
+  class App extends Component {
+    + use()
+  }
+  class VendorMap {
+    + String address
+    + LatLngBounds|LatLngBoundsLiteral bound
+    + LatLng getCenter()
+    + Array<proximityVendors>
+  }
+  class VendorList {
+    + Array<li Vendor>
+  }
+  class VendorInfo {
+    + String address
+    + LatLngBounds|LatLngBoundsLiteral bound
+  }
+}
+
+package EXPRESS.JS <<Node>> #aquamarine {
+    class Express {
+        + App()
+        + Req()
+        + Res()
+        + Router()
+  }
+}
+
+package Sequelize <<Database>> #lavender {
+  class Vendor {
+    + sync()
+    + define()
+    + find()
+    + build()
+  }
+  class queryInterface() {
+    + createTable(String vendorid, Vendor vendor)
+    + updateTable(String vendorid, Vendor vendor)
+  }
+  class user {
+  
+        Sequelize.INTEGER id
+        Sequelize.STRING firstName
+        Sequelize.STRING lastName
+        Sequelize.STRING username
+        Sequelize.STRING email
+        Sequelize.STRING password_hash
+        Sequelize.INTEGER age
+        Sequelize.STRING country
+        Sequelize.STRING location:
+        Sequelize.DATE createdAt
+        Sequelize.DATE updatedAt
+        
+        
+    }
+  }
+
+package POSTGRE <<Database>> #mediumorchid {
+  class VendorObject   {       
+        Sequelize.INTEGER id
+        STRING firstName
+        STRING lastName
+        STRING username
+        STRING email
+        STRING password_hash
+        INTEGER age
+        STRING country
+        STRING location:
+        DATE createdAt
+        DATE updatedAt
+}
+}
+package Google.Maps <<Cloud>> {
+  class Maps {
+  }
+  class Map {
+    + Array<MVCArray<Node>> controls
+    + Data data
+    + mapTypeRegistry mapTypes
+    + MVCArray<MapType> overlayMapTypes
+    + fitBounds(bounds)
+    + LatLngBounds getBounds()
+    + LatLng getCenter()
+    + boolean getClickableIcons()
+    + number getZoom()
+    + setOptions(MapOptions)
+    + setZoom(number)
+  }
+  class Geocoder {
+    + geocode(GeocoderRequest request, 
+    callBackfunction(Array<GeocoderResult>, GeocoderStatus))
+  }
+  interface GeocoderRequest {
+    + String address
+    + LatLngBounds|LatLngBoundsLiteral bound
+  }
+}
+
+App *-- VendorMap
+App *-- VendorList
+App *-- VendorInfo
+
+Geocoder --|> Maps
+GeocoderRequest --|> Maps
+Map --|> Maps
+@enduml
